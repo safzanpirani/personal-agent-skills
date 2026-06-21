@@ -18,6 +18,7 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 ## Skills
 
 - `chrome-cdp` — interact with an explicitly approved local Chrome session through Chrome DevTools Protocol.
+- `code-refactor-review` — review diffs for reuse, composition, codebase consistency, and slop.
 - `deslop` — clean AI-generated code slop from branch diffs while preserving behavior.
 - `diagnose` — run a disciplined bug/performance diagnosis loop from reproduction to regression test.
 - `grill-me` — interview relentlessly about a plan or design until the decision tree is resolved.
