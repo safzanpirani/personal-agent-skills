@@ -3,8 +3,8 @@
 # Planner + Reviewer = one model (default kimi), Worker = another (default deepseek).
 set -uo pipefail
 
-PLANNER="${TANDEM_PLANNER:-opencode/kimi-k2.7-code}"
-WORKER="${TANDEM_WORKER:-opencode/deepseek-v4-pro}"
+PLANNER="${TANDEM_PLANNER:-opencode-go/kimi-k3}"
+WORKER="${TANDEM_WORKER:-opencode-go/deepseek-v4-pro}"
 REVIEWER="${TANDEM_REVIEWER:-$PLANNER}"
 MAX_ROUNDS="${TANDEM_ROUNDS:-5}"
 DIR="$PWD"

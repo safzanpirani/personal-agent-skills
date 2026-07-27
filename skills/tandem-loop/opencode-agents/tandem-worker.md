@@ -5,7 +5,7 @@ description: >-
   proceeds without asking questions. Invoke with @tandem-worker or as a subagent
   from the tandem-orchestrator.
 mode: subagent
-model: opencode/deepseek-v4-pro
+model: opencode-go/deepseek-v4-pro
 temperature: 0.1
 color: "#06b6d4"
 permission:

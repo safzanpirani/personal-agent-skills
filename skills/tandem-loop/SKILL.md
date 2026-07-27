@@ -7,8 +7,8 @@ description: Run one task through a multi-model plan → work → check loop usi
 
 One task, three roles, two models, no human handover:
 
-1. **Planner** (default `opencode/kimi-k2.7-code`) — reads the repo, emits an ordered plan + acceptance checks. Never edits.
-2. **Worker** (default `opencode/deepseek-v4-pro`) — implements the plan, runs the checks, reports.
+1. **Planner** (default `opencode-go/kimi-k3`) — reads the repo, emits an ordered plan + acceptance checks. Never edits.
+2. **Worker** (default `opencode-go/deepseek-v4-pro`) — implements the plan, runs the checks, reports.
 3. **Reviewer** (same model as planner) — independently verifies against real repo state, ends with `VERDICT: DONE` or `VERDICT: CONTINUE`.
 
 On `CONTINUE`, the review is fed back into the next planning round. Loops until `DONE` or max rounds.
@@ -23,8 +23,8 @@ Options:
 
 | flag | default | meaning |
 |---|---|---|
-| `--planner MODEL` | `opencode/kimi-k2.7-code` | plan model, `provider/model` |
-| `--worker MODEL` | `opencode/deepseek-v4-pro` | implementation model |
+| `--planner MODEL` | `opencode-go/kimi-k3` | plan model, `provider/model` |
+| `--worker MODEL` | `opencode-go/deepseek-v4-pro` | implementation model |
 | `--reviewer MODEL` | = planner | verification model |
 | `--rounds N` | 5 | max plan/work/check cycles |
 | `--dir PATH` | cwd | repo to work in |

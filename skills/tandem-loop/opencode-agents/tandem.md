@@ -5,7 +5,7 @@ description: >-
   tandem-reviewer subagents and repeats until the reviewer returns DONE. Invoke
   with @tandem or Tab to it, then state the task.
 mode: primary
-model: opencode/kimi-k2.7-code
+model: opencode-go/kimi-k3
 temperature: 0.2
 color: "#a855f7"
 permission:

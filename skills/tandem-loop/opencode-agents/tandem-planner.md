@@ -5,7 +5,7 @@ description: >-
   runnable acceptance checks. Never edits files. Invoke with @tandem-planner or
   as a subagent from the tandem-orchestrator.
 mode: subagent
-model: opencode/kimi-k2.7-code
+model: opencode-go/kimi-k3
 temperature: 0.2
 color: "#8b5cf6"
 permission:

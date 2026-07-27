@@ -5,7 +5,7 @@ description: >-
   and ends with VERDICT: DONE or VERDICT: CONTINUE. Never edits files. Invoke with
   @tandem-reviewer or as a subagent from the tandem-orchestrator.
 mode: subagent
-model: opencode/kimi-k2.7-code
+model: opencode-go/kimi-k3
 temperature: 0.1
 color: "#f59e0b"
 permission:
