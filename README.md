@@ -24,6 +24,7 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 - `grill-me` — interview relentlessly about a plan or design until the decision tree is resolved.
 - `handoff` — compact the current conversation into a handoff document for another agent.
 - `quality-code` — apply full-stack TypeScript quality principles for types, tests, observability, and abstractions.
+- `tandem-loop` — run one task through a multi-model plan → work → check loop using opencode as the harness (e.g. Kimi plans, DeepSeek implements, Kimi verifies, repeat until done); ships a headless script and native opencode agents.
 - `review-codex-auto` — generate a current-branch review prompt, run a second headless Codex instance with `codex exec`, and report its output.
 - `write-a-prd` — turn a client brief into a local `issues/prd.md` product requirements document.
 - `fix-merge-conflicts` — resolve merge conflicts non-interactively, validate build and tests, and finalize conflict resolution.
