@@ -17,12 +17,15 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 
 ## Skills
 
+- `bun-cli` — build a single-purpose CLI in Bun + TypeScript (pure core, thin frontends, hand-rolled flags, optional MCP server sharing the same core); ships a scaffold script.
 - `chrome-cdp` — interact with an explicitly approved local Chrome session through Chrome DevTools Protocol.
 - `code-refactor-review` — review diffs for reuse, composition, codebase consistency, and slop.
 - `deslop` — clean AI-generated code slop from branch diffs while preserving behavior.
 - `diagnose` — run a disciplined bug/performance diagnosis loop from reproduction to regression test.
 - `grill-me` — interview relentlessly about a plan or design until the decision tree is resolved.
+- `hallmark` — anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots.
 - `handoff` — compact the current conversation into a handoff document for another agent.
+- `i-have-adhd` — shape every response for an ADHD reader: lead with next actions, number steps, externalize state, cut tangents.
 - `quality-code` — apply full-stack TypeScript quality principles for types, tests, observability, and abstractions.
 - `tandem-loop` — run one task through a multi-model plan → work → check loop using opencode as the harness (e.g. Kimi plans, DeepSeek implements, Kimi verifies, repeat until done); ships a headless script and native opencode agents.
 - `review-codex-auto` — generate a current-branch review prompt, run a second headless Codex instance with `codex exec`, and report its output.
