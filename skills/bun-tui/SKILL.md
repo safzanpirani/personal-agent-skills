@@ -1,6 +1,6 @@
 ---
 name: bun-tui
-description: Make a Bun/TS command-line tool's output look designed — the render layer, in the house style used by `qb` and `see`. An escalation ladder from plain styled lines to live redraw to a fullscreen OpenTUI app, a Theme resolved once from the environment, pure snapshot-testable renderers, and the width/ANSI/degradation rules that keep it correct when piped. Includes a scaffold that drops a working `render.ts` + `theme.ts` + tests into an existing project. Use when the user wants nicer or prettier terminal output, a table, progress bar, spinner, status line, live/watch view, colours, a dashboard or monitor in the terminal, an interactive TUI, or says output looks ugly or unreadable. For OpenTUI component and reconciler APIs, use the `opentui` skill instead — this one decides whether you need it and how the result should look.
+description: Make a Bun/TS command-line tool's output look designed — the render layer, in the house style used by `qb` and `see`. An escalation ladder from plain styled lines to live redraw to a fullscreen OpenTUI app, a Theme resolved once from the environment, pure snapshot-testable renderers, and the width/ANSI/degradation rules that keep it correct when piped. Includes a scaffold that drops a working `render.ts` + `theme.ts` + tests into an existing project. Use when the user wants nicer or prettier terminal output, a table, progress bar, spinner, status line, live/watch view, colours, a dashboard or monitor in the terminal, an interactive TUI, or says output looks ugly or unreadable. Covers rungs 1-3 completely; for OpenTUI component and reconciler APIs it defers to the `opentui` skill, installed if missing with `npx skills add anomalyco/opentui --skill opentui -g`. This skill decides whether you need a TUI at all and how the result should look.
 ---
 
 # Terminal render layers
@@ -30,6 +30,19 @@ prints a good table composes with everything; one that grabs the alt-screen
 composes with nothing. Reach for rung 4 when there is genuinely *state to
 navigate* — panes, selection, a list too long to read at once. See
 `references/fullscreen.md` before you do.
+
+> **Rung 4 needs the `opentui` skill installed. Check first — do not write
+> OpenTUI code from memory.** This skill covers rungs 1–3 completely and stops
+> at the boundary of OpenTUI's API on purpose; it does not duplicate it.
+>
+> ```bash
+> npx skills add anomalyco/opentui --skill opentui -g
+> ```
+>
+> That is the official upstream skill, generated from the OpenTUI repo itself,
+> so it tracks the code. OpenTUI moves fast and its API is not stable enough to
+> recall — a model writing rung-4 code without it will invent components that do
+> not exist and reach for `bunx create-tui`, which no longer exists.
 
 ## `render.ts` is pure: data in, string out
 
@@ -146,17 +159,5 @@ adds the layer between them.
 ## Going fullscreen
 
 `references/fullscreen.md` — when rung 4 is justified, how to structure the app
-so `core.ts` stays reusable, and what breaks (signals, resize, logging, exit).
-
-For OpenTUI's actual API — components, reconcilers, layout, keymap, testing,
-standalone builds — use the **`opentui` skill**. The installed one is the
-official upstream skill, whose docs are generated from the repo itself
-(`packages/web/src/content`), so it tracks the code rather than a snapshot:
-
-```bash
-npx skills add anomalyco/opentui --skill opentui -g   # to refresh it
-```
-
-If it ever shows `bunx create-tui` instead of `bun create tui --template react`,
-or has no `docs/keymap/`, it has drifted back to a stale community copy — refresh
-before trusting it.
+so `core.ts` stays reusable, what breaks (signals, resize, logging, exit), and
+the `opentui` skill install it depends on.

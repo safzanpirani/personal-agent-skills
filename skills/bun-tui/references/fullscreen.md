@@ -1,9 +1,30 @@
 # Rung 4: fullscreen apps
 
-Read this before taking the alt-screen. For OpenTUI's API surface — components,
-React/Solid reconcilers, layout, animation — use the `opentui` skill; this file
-is only about whether to, and how to structure it so the rest of the tool
-survives.
+Read this before taking the alt-screen. This file is only about *whether* to,
+and how to structure the app so the rest of the tool survives.
+
+## Prerequisite: install the `opentui` skill
+
+**Do this before writing a line of OpenTUI code.** Check whether the `opentui`
+skill is available; if it is not:
+
+```bash
+npx skills add anomalyco/opentui --skill opentui -g
+```
+
+It installs to `~/.agents/skills/opentui` and symlinks into every harness. The
+docs are generated from `packages/web/src/content` in the OpenTUI repo, so they
+track the code rather than a snapshot — which matters because OpenTUI ships
+fast and its surface is not stable enough to write from memory.
+
+Everything about components, the React and Solid reconcilers, layout, animation,
+keymap, testing, native images, audio, plugins, QR, Three.js and standalone
+builds lives there. This file deliberately does not repeat any of it — if the
+two ever disagree, upstream wins.
+
+Sanity checks that the installed skill is the current one, not a stale community
+fork: it shows `bun create tui --template react` (not `bunx create-tui`) and has
+a `docs/keymap/` directory.
 
 ## Justify it first
 
@@ -82,10 +103,6 @@ engine), `@opentui/ssh` (serve a TUI over SSH — relevant for anything fleet-sh
 Start a new app with `bun create tui --template react`. This replaced
 `bunx create-tui -t react <name>`; older blog posts and community skills still
 show the old form, which fails on flag order.
-
-The upstream skill also covers native images, audio, plugins, QR encoding,
-Three.js WebGPU and compiling to a standalone executable — check there before
-assuming something is not supported.
 
 Curated list: <https://github.com/msmps/awesome-opentui> — worth reading a real
 app before writing one. `opendocker`, `ghui`, `red` and `cftop` are all the
