@@ -26,6 +26,10 @@ passes before you edit anything — start from it rather than assembling a proje
 - **One file owns each external dependency** — the decoder, the SSH layer, the API client.
   Swapping it later is then a one-file change.
 - **`cli.ts` is thin**: parse, call, render, exit.
+- **Rendering is its own layer.** Once the output has shape — a table, progress,
+  colour, anything live — it belongs in `render.ts`, pure and taking a resolved
+  theme, not inlined into `cli.ts`. See the **`bun-tui`** skill; it scaffolds
+  that layer into a project this one created.
 
 ## Inject dependencies; never patch globals
 

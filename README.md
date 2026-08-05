@@ -18,6 +18,7 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 ## Skills
 
 - `bun-cli` — build a single-purpose CLI in Bun + TypeScript (pure core, thin frontends, hand-rolled flags, optional MCP server sharing the same core); ships a scaffold script.
+- `bun-tui` — make a CLI's terminal output look designed: an escalation ladder from styled lines to live redraw to a fullscreen OpenTUI app, a Theme resolved once from the environment, pure snapshot-testable renderers, and the cell-width/ANSI/degradation rules; ships a scaffold for `render.ts` + `theme.ts` + tests. Pairs with `bun-cli`; defers to the upstream [`opentui`](https://github.com/anomalyco/opentui) skill for OpenTUI APIs.
 - `chrome-cdp` — interact with an explicitly approved local Chrome session through Chrome DevTools Protocol.
 - `code-refactor-review` — review diffs for reuse, composition, codebase consistency, and slop.
 - `deslop` — clean AI-generated code slop from branch diffs while preserving behavior.
