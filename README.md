@@ -27,6 +27,7 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 - `hallmark` — anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots.
 - `handoff` — compact the current conversation into a handoff document for another agent.
 - `i-have-adhd` — shape every response for an ADHD reader: lead with next actions, number steps, externalize state, cut tangents.
+- `proofshot` — verify UI work in a real browser and hand back video proof, screenshots, and console/server error reports; "give me a before and after" checks out the base commit into a throwaway git worktree and records the same flow against old and new code. Requires the [`safzanpirani/proofshot`](https://github.com/safzanpirani/proofshot) fork of [`AmElmo/proofshot`](https://github.com/AmElmo/proofshot) plus [`agent-browser`](https://github.com/vercel-labs/agent-browser).
 - `quality-code` — apply full-stack TypeScript quality principles for types, tests, observability, and abstractions.
 - `tandem-loop` — run one task through a multi-model plan → work → check loop using opencode as the harness (e.g. Kimi plans, DeepSeek implements, Kimi verifies, repeat until done); ships a headless script and native opencode agents.
 - `review-codex-auto` — generate a current-branch review prompt, run a second headless Codex instance with `codex exec`, and report its output.
