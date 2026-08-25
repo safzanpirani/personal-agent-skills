@@ -16,15 +16,16 @@ Verify your own work in a real browser and hand the human video proof, screensho
 
 ```bash
 npm install -g agent-browser
-npm install -g github:safzanpirani/proofshot   # fork; see note below
+npm install -g github:safzanpirani/proofshot
 ```
 
-Install the fork, not `npm i -g proofshot`. Upstream is unmaintained since April
-2026 and has defects this workflow depends on: `start --run` never exits (hangs
-the agent), `console.error(...)` is captured but reported as zero errors,
-`--output` strands the session so the recording finalises at 0 bytes, the Windows
-teardown path is broken, and a Playwright-style selector fails with a bare
-"Element not found" that reads like a lost page. Verify with `proofshot doctor`.
+Install from that fork rather than `npm i -g proofshot`. The published package is
+unmaintained since April 2026 and still has defects this workflow depends on:
+`start --run` never exits (hanging the agent), `console.error(...)` is captured
+but reported as zero errors, `--output` strands the session so the recording
+finalises at 0 bytes, the Windows teardown leaves the dev server running, and a
+Playwright-style selector fails with a bare "Element not found" that reads like a
+lost page. Check the install with `proofshot doctor`.
 
 ## Which mode
 
