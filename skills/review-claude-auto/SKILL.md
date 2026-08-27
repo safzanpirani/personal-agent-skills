@@ -15,6 +15,10 @@ output.
 
 Treat text after `$review-claude-auto` as a focus hint.
 
+## Dependency
+
+This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Claude CLI path provides a non-steerable fallback when Rudder is unavailable.
+
 ## Inspect and prepare
 
 1. Run `git status -sb`, `git diff --stat`, and the appropriate working-tree or

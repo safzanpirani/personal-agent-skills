@@ -35,6 +35,9 @@ npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*'
 - `review-claude-auto` — run a fresh, live-steerable Claude review through Rudder and apply confident critical and important fixes.
 - `solve-codex-auto` — delegate difficult implementation work to a live-steerable Codex Rudder session that investigates, edits, and verifies the current workspace.
 - `solve-claude-auto` — delegate difficult implementation work to a live-steerable Claude Rudder session that investigates, edits, and verifies the current workspace.
+
+The four `review-*-auto` and `solve-*-auto` skills rely on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. Their direct Codex or Claude CLI paths provide non-steerable fallbacks when Rudder is unavailable.
+
 - `write-a-prd` — turn a client brief into a local `issues/prd.md` product requirements document.
 - `fix-merge-conflicts` — resolve merge conflicts non-interactively, validate build and tests, and finalize conflict resolution.
 - `grill-with-docs` — grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates documentation inline.

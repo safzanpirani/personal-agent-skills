@@ -15,6 +15,10 @@ Treat text after `$solve-claude-auto` as the task statement. Otherwise infer
 the task from the current conversation. This consumes Claude quota; use
 `solve-codex-auto` when the user wants the separate Codex budget.
 
+## Dependency
+
+This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Claude CLI path provides a non-steerable fallback when Rudder is unavailable.
+
 ## Build the brief
 
 A fresh Claude session has none of the parent conversation. Include:
