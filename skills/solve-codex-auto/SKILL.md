@@ -11,10 +11,6 @@ Your job: package the problem you're struggling with into a self-contained brief
 
 If invoked as `$solve-codex-auto <text>`, treat the text as the task statement. Otherwise infer the stuck task from the recent conversation.
 
-## Dependency
-
-This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Codex CLI path provides a non-steerable fallback when Rudder is unavailable.
-
 ## Steerable Codex command
 
 Prefer Codex Rudder and run it backgrounded. Rudder owns the app-server

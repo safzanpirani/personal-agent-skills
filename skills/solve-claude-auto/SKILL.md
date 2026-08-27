@@ -15,10 +15,6 @@ Treat text after `$solve-claude-auto` as the task statement. Otherwise infer
 the task from the current conversation. This consumes Claude quota; use
 `solve-codex-auto` when the user wants the separate Codex budget.
 
-## Dependency
-
-This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Claude CLI path provides a non-steerable fallback when Rudder is unavailable.
-
 ## Build the brief
 
 A fresh Claude session has none of the parent conversation. Include:
@@ -58,8 +54,23 @@ Before launch, capture `git status -sb` and a fixed-path pre-run diff so the
 sub-Claude's changes remain attributable. Use a separate worktree for risky or
 competing approaches. Preserve unrelated user changes.
 
-Resolve Claude once with `command -v claude`, then substitute its absolute path
-for `CLAUDE_PATH`. Do not inspect or propagate credentials.
+Resolve Claude once, then substitute its absolute path for `CLAUDE_PATH`. Prefer
+`/Users/safzan/.local/bin/claude-t3` when it exists and is executable; it reads
+the long-lived setup token from the macOS Keychain, which the bare binary cannot
+do in a detached process. Otherwise fall back to `command -v claude`. Do not
+inspect or propagate credentials.
+
+Choose one exact model ID for every launch:
+
+- `claude-sonnet-5` for routine, bounded work when speed or quota conservation
+  matters more than maximum capability.
+- `claude-opus-5` for hard, stuck, or context-heavy implementation work. Use
+  this model by default when the user has not selected another model.
+- `claude-fable-5` for the hardest or highest-risk work when its higher cost is
+  justified.
+
+Honor an explicit user choice among these three models. Substitute the chosen
+literal ID in the command instead of relying on the host's Claude default.
 
 ## Launch through Rudder
 
@@ -70,6 +81,7 @@ rudder run \
   --cwd "$PWD" \
   --prompt-file .scratch/<feature-slug>/solve-claude.prompt.md \
   --state-dir .scratch/<feature-slug>/solve-claude.run \
+  --model claude-opus-5 \
   --effort high \
   --sandbox danger-full-access
 ```
@@ -81,8 +93,9 @@ a foreground tool call with a short timeout.
 Claude-specific rules:
 
 - Always pass `--provider claude`; Rudder defaults to Codex.
-- Omit `--model` unless the user explicitly chose a Claude model, preserving
-  Claude Code's configured default.
+- Always pass one of `--model claude-fable-5`,
+  `--model claude-sonnet-5`, or `--model claude-opus-5` according to the
+  selection rules above.
 - `danger-full-access` maps to Claude's `bypassPermissions` and is appropriate
   for this autonomous edit/test skill. Use `workspace-write` only when network
   and out-of-workspace access are definitely unnecessary; use `read-only` for
@@ -156,6 +169,7 @@ through the harness's background facility:
 
 ```bash
 claude -p --output-format stream-json --verbose \
+  --model claude-opus-5 \
   --dangerously-skip-permissions --add-dir "$PWD" \
   < .scratch/<feature-slug>/solve-claude.prompt.md \
   > .scratch/<feature-slug>/solve-claude.live.jsonl 2>&1

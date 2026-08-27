@@ -11,10 +11,6 @@ Your job: generate a tailored review prompt for Codex, then automatically run it
 
 If the user invoked this with `$review-codex-auto <text>`, treat any text after the skill name as a **focus hint** and weight the review angles toward it.
 
-## Dependency
-
-This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Codex CLI path provides a non-steerable fallback when Rudder is unavailable.
-
 ## Steerable Codex command
 
 Prefer Codex Rudder. It owns a `codex app-server` connection, streams progress,

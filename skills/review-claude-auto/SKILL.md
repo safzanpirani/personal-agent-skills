@@ -15,10 +15,6 @@ output.
 
 Treat text after `$review-claude-auto` as a focus hint.
 
-## Dependency
-
-This skill relies on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. The direct Claude CLI path provides a non-steerable fallback when Rudder is unavailable.
-
 ## Inspect and prepare
 
 1. Run `git status -sb`, `git diff --stat`, and the appropriate working-tree or
@@ -53,9 +49,24 @@ Then, at the very end, print a **"Changes applied"** rundown:
 ## Launch through Rudder
 
 Use fixed literal paths under `.scratch/<feature-slug>/`; do not reuse a prior
-run directory. Resolve Claude once with `command -v claude` and substitute that
-absolute path for `CLAUDE_PATH`. This avoids PATH differences in detached
-processes without exposing authentication data.
+run directory. Resolve Claude once and substitute that absolute path for
+`CLAUDE_PATH`. Prefer `/Users/safzan/.local/bin/claude-t3` when it exists and is
+executable; it reads the long-lived setup token from the macOS Keychain, which
+the bare binary cannot do in a detached process. Otherwise fall back to
+`command -v claude`. This avoids PATH differences in detached processes without
+exposing authentication data.
+
+Choose one exact model ID for every launch:
+
+- `claude-sonnet-5` for a narrow, routine review when speed or quota
+  conservation matters more than maximum capability.
+- `claude-opus-5` for complex or context-heavy reviews. Use this model by
+  default when the user has not selected another model.
+- `claude-fable-5` for the hardest, security-sensitive, or highest-risk reviews
+  when its higher cost is justified.
+
+Honor an explicit user choice among these three models. Substitute the chosen
+literal ID in the command instead of relying on the host's Claude default.
 
 ```bash
 rudder run \
@@ -64,6 +75,7 @@ rudder run \
   --cwd "$PWD" \
   --prompt-file .scratch/<feature-slug>/review-claude.prompt.md \
   --state-dir .scratch/<feature-slug>/review-claude.run \
+  --model claude-opus-5 \
   --effort high \
   --sandbox danger-full-access
 ```
@@ -75,8 +87,9 @@ tool call that will be killed by a short timeout.
 Claude-specific rules:
 
 - Keep `--provider claude`; Rudder otherwise defaults to Codex.
-- Omit `--model` unless the user requested a specific Claude model, preserving
-  Claude Code's configured default.
+- Always pass one of `--model claude-fable-5`,
+  `--model claude-sonnet-5`, or `--model claude-opus-5` according to the
+  selection rules above.
 - `danger-full-access` maps to Claude's `bypassPermissions`, matching this
   skill's autonomous edit-and-test behavior. Use `read-only` only for an
   explicitly advisory review with no edits.
@@ -130,6 +143,7 @@ If Rudder is unavailable but Claude exists, use the non-steerable fallback:
 
 ```bash
 claude -p --output-format stream-json --verbose \
+  --model claude-opus-5 \
   --dangerously-skip-permissions --add-dir "$PWD" \
   < .scratch/<feature-slug>/review-claude.prompt.md \
   > .scratch/<feature-slug>/review-claude.live.jsonl 2>&1

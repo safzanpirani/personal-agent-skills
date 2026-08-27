@@ -5,6 +5,26 @@ description: Build a single-purpose CLI tool in Bun + TypeScript, in the house s
 
 # Bun/TS one-shot CLIs
 
+## Prefer Bun's native APIs
+
+Target current stable Bun and check the official API before adding a package for
+runtime work. For Bun 1.4 projects, pin both `packageManager` and `@types/bun` to
+the runtime version. Prefer these built-ins when they cover the required behavior:
+
+- `Bun.Image` for image metadata, decode, resize, conversion and encoding. Do not
+  add Sharp for those operations. `Bun.Image` does not currently expose raw pixel
+  buffers or crop, so name that missing capability before choosing a fallback.
+- `Bun.WebView` for screenshots and browser automation instead of Puppeteer when
+  its platform backend and experimental status fit the deployment target.
+- `Bun.markdown`, `Bun.JSON5`, `Bun.color`, `Bun.cron` and `Bun.Terminal` instead
+  of parser, color, scheduler and PTY packages for features their APIs support.
+- `Bun.spawn` and `Bun.$` instead of child-process wrappers. Keep subprocess calls
+  shell-free unless shell syntax is the feature being requested.
+
+Do not contort the program around a native API that lacks a required operation.
+When a dependency remains necessary, keep it behind one module and record the
+specific gap. Re-check that gap on the next Bun upgrade.
+
 ## Scaffold first
 
 ```bash

@@ -159,5 +159,7 @@ adds the layer between them.
 ## Going fullscreen
 
 `references/fullscreen.md` — when rung 4 is justified, how to structure the app
-so `core.ts` stays reusable, what breaks (signals, resize, logging, exit), and
-the `opentui` skill install it depends on.
+so `core.ts` stays reusable, how refresh-safe selection and follow mode work,
+how to route keyboard and mouse input, how to package the installed app, what
+breaks (signals, resize, logging, exit), and the `opentui` skill install it
+depends on.
