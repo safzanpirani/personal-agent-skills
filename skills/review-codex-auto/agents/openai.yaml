@@ -1,7 +1,6 @@
 interface:
   display_name: "/review-codex-auto"
-  short_description: "Run a second headless Codex instance to review and fix current changes"
-  default_prompt: "Use $review-codex-auto to generate a tailored current-branch review prompt, run it with codex exec in the current repository, and report the second Codex instance's final output."
+  short_description: "Run a live-steerable Codex review and fixes"
+  default_prompt: "Use $review-codex-auto to run a live-steerable Codex Rudder review of the current changes, apply confident fixes, and report the verified result."
 policy:
   allow_implicit_invocation: false
-
