@@ -6,7 +6,7 @@
  *
  *   bun run scaffold.ts <name> [--dir path] [--mcp] [--desc "one line"]
  */
-import { mkdirSync, existsSync, chmodSync } from "node:fs";
+import { mkdirSync, existsSync, chmodSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const args = process.argv.slice(2);
@@ -22,7 +22,10 @@ if (!name || !/^[a-z][a-z0-9-]*$/.test(name)) {
   process.exit(1);
 }
 const dir = resolve(dirFlag ?? name);
-if (existsSync(dir)) { console.error(`refusing to overwrite existing ${dir}`); process.exit(1); }
+if (existsSync(dir) && (!statSync(dir).isDirectory() || readdirSync(dir).length > 0)) {
+  console.error(`refusing to overwrite non-empty ${dir}`);
+  process.exit(1);
+}
 
 const pkg = {
   name, version: "0.1.0", description: desc, type: "module",
