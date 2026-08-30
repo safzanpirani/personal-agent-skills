@@ -15,6 +15,27 @@ Personal collection of heavily used agent skills.
 npx skills add https://github.com/safzanpirani/personal-agent-skills --skill '*' --agent '*' -g -y
 ```
 
+## Local topology
+
+This repository is the canonical source for shared personal skills. The
+checked-in manifest at `scripts/managed-skills.txt` selects the skills that the
+local sync command manages.
+
+```bash
+./scripts/sync-installed-skills.sh --check
+./scripts/sync-installed-skills.sh --apply
+```
+
+The command mirrors each managed skill into `~/.agents/skills` and verifies a
+deterministic SHA-256 tree hash. The command creates a Claude symlink only when
+the corresponding `~/.claude/skills` entry is missing. It preserves direct
+Claude directories as runtime-specific overrides. Codex discovers the shared
+`.agents/skills` tree directly. The command does not modify independent copies
+under `~/.codex/skills`.
+
+`proofshot` stays outside the managed manifest because its Claude and Codex
+installations carry runtime-specific guidance.
+
 ## Skills
 
 - `bun-cli` — build a single-purpose CLI in Bun + TypeScript (pure core, thin frontends, hand-rolled flags, optional MCP server sharing the same core); ships a scaffold script.

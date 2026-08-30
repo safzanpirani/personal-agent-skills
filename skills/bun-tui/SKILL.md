@@ -96,6 +96,16 @@ idea of the fallback, and the piped output is half-styled.
 
 ## Width and ANSI, where it actually breaks
 
+**On Bun 1.4+, the primitives are built in — do not add string-width, slice-ansi
+or wrap-ansi, and do not hand-roll them:** `Bun.stringWidth()` (grapheme- and
+ANSI-aware cell count), `Bun.sliceAnsi()` (column-aware slicing that keeps paint
+balanced), `Bun.wrapAnsi()` (ANSI-aware wrapping). Build `cells`/`truncate`/`pad`
+on top of these; the rules below still explain *why* each exists and remain the
+spec for older runtimes. `Bun.markdown.ansi(src)` renders markdown straight to
+styled terminal output (headings, tables, syntax-highlighted code) — reach for it
+before writing a bespoke markdown renderer for help text or LLM output. See the
+`bun-native` skill for the full 1.4 surface.
+
 - **Measure in cells, never `.length`.** `.length` counts UTF-16 units, so CJK
   reads as 1 (renders as 2) and emoji as 2 (renders as 2, but a ZWJ family is
   one grapheme of many units). Segment graphemes, then count wide ranges as 2.
@@ -152,7 +162,12 @@ adds the layer between them.
   alt-screen app cannot be checked by reading stdout — there is no stdout to
   read. Run it in a pane, `send-keys` to drive it, `capture-pane` to assert on
   the frame. That is also the only honest way to test the teardown rules below:
-  kill the pane mid-run and check the cursor came back.
+  kill the pane mid-run and check the cursor came back. On Bun 1.4+ there is an
+  in-`bun test` alternative for scripted cases: `Bun.spawn(cmd, { terminal:
+  { cols, rows, data } })` gives the tool a real PTY (`isTTY = true`), so a test
+  can drive it with `proc.terminal.write()` and assert on the captured frames —
+  no tmux orchestration, POSIX only. Use tmux when you need a human-visible
+  session or resize/kill interplay; use the PTY spawn for repeatable assertions.
 - **`bun-cli`** owns the layer above (`core.ts`, flags, exit codes) and the
   layer below (`--json`, stdout-is-data). This skill is the middle.
 

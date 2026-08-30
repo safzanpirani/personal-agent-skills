@@ -1,0 +1,25 @@
+# Shared skills mirrored into ~/.agents/skills.
+# Runtime-specific proofshot copies remain unmanaged.
+bun-cli
+bun-tui
+chrome-cdp
+code-refactor-review
+deslop
+diagnose
+fix-merge-conflicts
+grill-me
+grill-with-docs
+hallmark
+handoff
+i-have-adhd
+make-pr-easy-to-review
+quality-code
+read-project-memory
+review-claude-auto
+review-codex-auto
+solve-claude-auto
+solve-codex-auto
+tandem-loop
+thermo-nuclear-code-quality-review
+write-a-prd
+write-a-skill

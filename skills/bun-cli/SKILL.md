@@ -7,23 +7,35 @@ description: Build a single-purpose CLI tool in Bun + TypeScript, in the house s
 
 ## Prefer Bun's native APIs
 
-Target current stable Bun and check the official API before adding a package for
-runtime work. For Bun 1.4 projects, pin both `packageManager` and `@types/bun` to
-the runtime version. Prefer these built-ins when they cover the required behavior:
+**Before adding any dependency, read the `bun-native` skill** — the full Bun 1.4
+dependency→built-in map (images, headless browser, markdown, cron, PTY,
+JSON5/JSONC/TOML/XML, archives, ANSI string utils, compression, profiling), with
+platform caveats verified against the docs. Target current stable Bun; pin both
+`packageManager` and `@types/bun` to the runtime version.
 
-- `Bun.Image` for image metadata, decode, resize, conversion and encoding. Do not
-  add Sharp for those operations. `Bun.Image` does not currently expose raw pixel
-  buffers or crop, so name that missing capability before choosing a fallback.
-- `Bun.WebView` for screenshots and browser automation instead of Puppeteer when
-  its platform backend and experimental status fit the deployment target.
-- `Bun.markdown`, `Bun.JSON5`, `Bun.color`, `Bun.cron` and `Bun.Terminal` instead
-  of parser, color, scheduler and PTY packages for features their APIs support.
+The ones that come up most in CLI work:
+
 - `Bun.spawn` and `Bun.$` instead of child-process wrappers. Keep subprocess calls
-  shell-free unless shell syntax is the feature being requested.
+  shell-free unless shell syntax is the feature being requested. For interactive
+  programs, `Bun.spawn(cmd, { terminal })` attaches a PTY (POSIX only) — no node-pty.
+- `Bun.JSON5` / `Bun.JSONC` / `Bun.TOML` for config files users hand-edit —
+  comments and trailing commas stop being parse errors, at zero deps.
+- `Bun.Archive` for tarballs, `CompressionStream` for gzip/brotli/zstd.
+- `Bun.Image` instead of sharp; `Bun.WebView` (experimental; zero-dep on macOS
+  only) instead of Puppeteer for screenshot/scrape verbs.
+- `Bun.cron` when the tool grows a "run this on a schedule" verb — the OS-level
+  form registers with launchd/crontab/Task Scheduler and survives reboots.
 
 Do not contort the program around a native API that lacks a required operation.
 When a dependency remains necessary, keep it behind one module and record the
 specific gap. Re-check that gap on the next Bun upgrade.
+
+Tooling that replaces dev-dependencies too: `bun repl` for API poking,
+`bun --cpu-prof-md` / `--heap-prof-md` for profiling (Markdown reports an agent
+can read directly), `bun test --changed` while iterating, `test(..., {retry: N})`
+for a flaky integration test, `bun run --parallel` instead of concurrently, and
+`bun build --compile --asset <dir>` to embed data files in the shipped binary
+(readable via `node:fs` under `/$bunfs/`).
 
 ## Scaffold first
 
@@ -91,6 +103,32 @@ suite passes alone but fails together.
 - **Long or bulk runs must be resumable**: flush after every item, skip completed work on
   re-run, retry with backoff, isolate one failure from the batch. Assume interruption.
 
+## Agents are the primary users
+
+Most of these tools are driven by agents in non-interactive shells, not humans.
+Design for that caller first:
+
+- **Never prompt interactively.** No readline, no y/N confirmation — an agent's
+  shell has no tty, the prompt reads EOF, and the tool hangs or silently takes
+  the default. Destructive verbs take `--yes` and fail loudly without it,
+  printing exactly what re-running with `--yes` would do (the `push`/`pull`
+  dry-run pattern).
+- **Color is TTY-gated and honors `NO_COLOR`** (the scaffold does this). Escape
+  codes in captured output corrupt greps and bloat session logs.
+- **Error messages are instructions.** The agent acts on the string verbatim, so
+  name the fix in it: the flag to add, the env var to set, the config path to
+  create. `config: no config at ~/.config/x/config.json — copy x.config.example.json
+  there` gets self-repaired in one turn; `Error: ENOENT` costs a debugging loop.
+- **`--help` is complete and instant.** Agents run `--help` before guessing
+  flags; it must list every flag and cost nothing (no config load, no network —
+  the eager-validate/lazy-acquire rule again).
+- **No pagers, no TUIs, no spinners on default paths.** Progress that repaints
+  lines belongs behind a TTY check; when piped, print plain one-per-line events
+  or nothing.
+- **Verbs are idempotent and re-runnable.** Agents retry on failure; a re-run
+  after a partial success must converge, not duplicate or error on
+  already-done work.
+
 ## Working against someone else's API
 
 - **Read the docs, then probe, then write the client.** Never code an external API from
@@ -126,6 +164,20 @@ Register tools over the same `core.ts` calls. The description is all a calling m
 say when to reach for the tool and what comes back, not just what it does. Gate mutating
 tools behind a read-only switch. Assert the exact tool list in a test: that is what catches
 a capability existing in the CLI but missing from MCP.
+
+## Shipping: a tool agents can't find doesn't exist
+
+A finished tool gets three things beyond `bun link`, or future sessions
+hand-roll the workflow it replaces:
+
+1. **A companion skill** (`write-a-skill`) whose description says *when to
+   reach for it*, in the words a task would use — this is how `fleet`, `qb`,
+   `dbase` and `shipwatch` actually get picked up.
+2. **A row in the Personal CLIs table** in `~/.claude/CLAUDE.md` (name, what
+   it replaces, skill name), so it outranks curl/ssh muscle memory.
+3. **Fleet builds when other boxes need it**: `build:linux` for x64,
+   `build:linux-arm64` for ampere/oracle; install on ampere via the
+   `ampere-add-cli` skill so OpenClaw's agents see it too.
 
 ## If the CLI drives a model
 

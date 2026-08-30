@@ -4,7 +4,7 @@
  * flags, stdout-is-data. Produces a project whose `--help` runs and whose tests
  * pass before you have written a line of your own.
  *
- *   bun run scaffold.ts <name> [--dir path] [--mcp] [--desc "one line"]
+ *   bun run scaffold.ts <name> [--dir path] [--config] [--mcp] [--desc "one line"]
  */
 import { mkdirSync, existsSync, chmodSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -36,6 +36,7 @@ const pkg = {
     test: "bun test", typecheck: "tsc --noEmit", check: "bun run typecheck && bun test",
     "build:local": `bun build --compile src/cli.ts --outfile dist/${name}`,
     "build:linux": `bun build --compile --target=bun-linux-x64 src/cli.ts --outfile dist/${name}-linux-x64`,
+    "build:linux-arm64": `bun build --compile --target=bun-linux-arm64 src/cli.ts --outfile dist/${name}-linux-arm64`,
   },
   devDependencies: { "@types/bun": "latest", typescript: "^5" },
   ...(withMcp ? { dependencies: { "@modelcontextprotocol/sdk": "^1.29.0", zod: "^4.4.3" } } : {}),
@@ -89,9 +90,15 @@ const cli = `#!/usr/bin/env bun
  */
 import { run, DEFAULTS } from "./core.ts";
 
+// Color only when a human is looking: gate on the destination stream's TTY and
+// honor NO_COLOR, so piped/agent-captured output carries no escape codes.
+const paint = (code: number, on: boolean) =>
+  on ? (s: string) => \u0060\\x1b[\u0024{code}m\u0024{s}\\x1b[0m\u0060 : (s: string) => s;
+const OUT_TTY = !process.env["NO_COLOR"] && !!process.stdout.isTTY;
+const ERR_TTY = !process.env["NO_COLOR"] && !!process.stderr.isTTY;
 const A = {
-  g: (s: string) => \u0060\\x1b[32m\u0024{s}\\x1b[0m\u0060, r: (s: string) => \u0060\\x1b[31m\u0024{s}\\x1b[0m\u0060,
-  d: (s: string) => \u0060\\x1b[90m\u0024{s}\\x1b[0m\u0060, b: (s: string) => \u0060\\x1b[1m\u0024{s}\\x1b[0m\u0060,
+  g: paint(32, ERR_TTY), r: paint(31, ERR_TTY),
+  d: paint(90, ERR_TTY), b: paint(1, OUT_TTY),
 };
 function die(m: string): never {
   console.error(A.r("\\u2717 " + m));

@@ -7,7 +7,7 @@ metadata:
 
 # solve-codex-auto
 
-Your job: package the problem you're struggling with into a self-contained brief, then run it through a Codex CLI subprocess in headless mode so Codex investigates and *implements* the fix. Start fresh by default; resume or fork only after discovering an exact relevant prior thread as described below. This is for delegation, not review — Codex should end with working code, not a list of suggestions. It runs on Codex's separate quota, so this is also the right move when the Claude 5-hour limit is a concern (see [[feedback_codex_over_subagents]]).
+Your job: package the problem you're struggling with into a self-contained brief, then run it through a Codex CLI subprocess in headless mode so Codex investigates and *implements* the fix. Start fresh by default; resume or fork only after discovering an exact relevant prior thread as described below. This is for delegation, not review — Codex should end with working code, not a list of suggestions. It runs on Codex's separate quota, so this is also the right move when the Claude 5-hour limit is a concern.
 
 If invoked as `$solve-codex-auto <text>`, treat the text as the task statement. Otherwise infer the stuck task from the recent conversation.
 
