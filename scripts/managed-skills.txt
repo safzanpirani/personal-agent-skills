@@ -13,6 +13,7 @@ hallmark
 handoff
 i-have-adhd
 make-pr-easy-to-review
+personal-skill-sync
 quality-code
 read-project-memory
 review-claude-auto
