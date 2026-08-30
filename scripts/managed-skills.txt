@@ -1,5 +1,6 @@
 # Shared skills mirrored into ~/.agents/skills.
 # Runtime-specific proofshot copies remain unmanaged.
+astcomp
 bun-cli
 bun-tui
 chrome-cdp
