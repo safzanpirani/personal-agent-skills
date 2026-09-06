@@ -1,5 +1,6 @@
 # Shared skills mirrored into ~/.agents/skills.
 # Runtime-specific proofshot copies remain unmanaged.
+agent-controller-review
 astcomp
 bun-cli
 bun-tui
@@ -7,6 +8,7 @@ chrome-cdp
 code-refactor-review
 deslop
 diagnose
+dlss5-feeder-nr
 fix-merge-conflicts
 grill-me
 grill-with-docs
@@ -18,9 +20,14 @@ personal-skill-sync
 quality-code
 read-project-memory
 review-claude-auto
+review-claude-herdr
 review-codex-auto
+review-codex-herdr
 solve-claude-auto
+solve-claude-herdr
 solve-codex-auto
+solve-codex-herdr
+sxs
 tandem-loop
 thermo-nuclear-code-quality-review
 write-a-prd

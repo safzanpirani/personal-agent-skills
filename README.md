@@ -38,6 +38,7 @@ installations carry runtime-specific guidance.
 
 ## Skills
 
+- `agent-controller-review` — audit and harden long-lived subprocess controllers across JSON-RPC transport, lifecycle races, process-tree shutdown, private persistence, live steering, provider adapters, and terminal event synchronization.
 - `astcomp`: deobfuscates JavaScript with a bundled Bun CLI, a no-exec mode, a container path for untrusted decoders, behavioral checks, and optional scope-aware renaming.
 - `bun-cli` — build a single-purpose CLI in Bun + TypeScript (pure core, thin frontends, hand-rolled flags, optional MCP server sharing the same core); ships a scaffold script.
 - `bun-tui` — make a CLI's terminal output look designed: an escalation ladder from styled lines to live redraw to a fullscreen OpenTUI app, a Theme resolved once from the environment, pure snapshot-testable renderers, and the cell-width/ANSI/degradation rules; ships a scaffold for `render.ts` + `theme.ts` + tests. Pairs with `bun-cli`; defers to the upstream [`opentui`](https://github.com/anomalyco/opentui) skill for OpenTUI APIs.
@@ -45,6 +46,7 @@ installations carry runtime-specific guidance.
 - `code-refactor-review` — review diffs for reuse, composition, codebase consistency, and slop.
 - `deslop` — clean AI-generated code slop from branch diffs while preserving behavior.
 - `diagnose` — run a disciplined bug/performance diagnosis loop from reproduction to regression test.
+- `dlss5-feeder-nr` — run still images and videos through the DLSS 5 Neural Rendering feeder on the Windows RTX host, with verified transfer, interactive execution, structural validation, optional depth and motion guidance, and comparison output.
 - `grill-me` — interview relentlessly about a plan or design until the decision tree is resolved.
 - `hallmark` — anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots.
 - `handoff` — compact the current conversation into a handoff document for another agent.
@@ -58,6 +60,11 @@ installations carry runtime-specific guidance.
 - `review-claude-auto` — run a fresh, live-steerable Claude review through Rudder and apply confident critical and important fixes.
 - `solve-codex-auto` — delegate difficult implementation work to a live-steerable Codex Rudder session that investigates, edits, and verifies the current workspace.
 - `solve-claude-auto` — delegate difficult implementation work to a live-steerable Claude Rudder session that investigates, edits, and verifies the current workspace.
+- `review-codex-herdr` — run a visible Codex review in a sibling Herdr pane and apply confident critical and important fixes.
+- `review-claude-herdr` — run a visible Claude review in a sibling Herdr pane and apply confident critical and important fixes.
+- `solve-codex-herdr` — delegate implementation work to a visible, steerable Codex agent in a sibling Herdr pane.
+- `solve-claude-herdr` — delegate implementation work to a visible, steerable Claude agent in a sibling Herdr pane.
+- `sxs` — build labeled image and video comparison sheets, sampled video contact sheets, and render grids with machine-readable layout metadata.
 
 The four `review-*-auto` and `solve-*-auto` skills rely on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. Their direct Codex or Claude CLI paths provide non-steerable fallbacks when Rudder is unavailable.
 
