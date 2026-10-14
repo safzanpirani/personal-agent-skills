@@ -40,8 +40,10 @@ installations carry runtime-specific guidance.
 
 - `agent-controller-review` — audit and harden long-lived subprocess controllers across JSON-RPC transport, lifecycle races, process-tree shutdown, private persistence, live steering, provider adapters, and terminal event synchronization.
 - `astcomp`: deobfuscates JavaScript with a bundled Bun CLI, a no-exec mode, a container path for untrusted decoders, behavioral checks, and optional scope-aware renaming.
+- `bro` — restate the previous answer in plain language without jargon; user-invoked only.
 - `bun-cli` — build a single-purpose CLI in Bun + TypeScript (pure core, thin frontends, hand-rolled flags, optional MCP server sharing the same core); ships a scaffold script.
 - `bun-tui` — make a CLI's terminal output look designed: an escalation ladder from styled lines to live redraw to a fullscreen OpenTUI app, a Theme resolved once from the environment, pure snapshot-testable renderers, and the cell-width/ANSI/degradation rules; ships a scaffold for `render.ts` + `theme.ts` + tests. Pairs with `bun-cli`; defers to the upstream [`opentui`](https://github.com/anomalyco/opentui) skill for OpenTUI APIs.
+- `bun-native` — Bun 1.4+ native API reference that replaces common dependencies (image processing, browser automation, markdown, cron, PTY, config parsing, compression, profiling); read before adding a dependency to a Bun project.
 - `chrome-cdp` — interact with an explicitly approved local Chrome session through Chrome DevTools Protocol.
 - `code-refactor-review` — review diffs for reuse, composition, codebase consistency, and slop.
 - `deslop` — clean AI-generated code slop from branch diffs while preserving behavior.
@@ -51,10 +53,12 @@ installations carry runtime-specific guidance.
 - `hallmark` — anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction from URLs or screenshots.
 - `handoff` — compact the current conversation into a handoff document for another agent.
 - `i-have-adhd` — shape every response for an ADHD reader: lead with next actions, number steps, externalize state, cut tangents.
+- `papercuts` — log small, non-blocking workflow friction such as dead-end tool calls and broken links with the [`papercuts`](https://github.com/safzanpirani/papercuts) CLI.
 - `personal-skill-sync` reconciles the canonical personal-skill repository with the shared `.agents` mirror and Claude links while preserving runtime-specific overrides.
 - `proofshot` — verify UI work in a real browser and hand back video proof, screenshots, and console/server error reports; "give me a before and after" checks out the base commit into a throwaway git worktree and records the same flow against old and new code. Requires the [`safzanpirani/proofshot`](https://github.com/safzanpirani/proofshot) fork of [`AmElmo/proofshot`](https://github.com/AmElmo/proofshot) plus [`agent-browser`](https://github.com/vercel-labs/agent-browser).
 - `quality-code` — apply full-stack TypeScript quality principles for types, tests, observability, and abstractions.
 - `read-project-memory` — load Claude Code's persistent per-project memory into other agent harnesses, with full, index-only, and file-list modes.
+- `review` — review changes since a fixed point along Standards and Spec axes in parallel evidence passes, then optionally apply confident fixes.
 - `tandem-loop` — run one task through a multi-model plan → work → check loop using opencode as the harness (e.g. Kimi plans, DeepSeek implements, Kimi verifies, repeat until done); ships a headless script and native opencode agents.
 - `review-codex-auto` — run a fresh, live-steerable Codex review through Rudder and apply confident critical and important fixes.
 - `review-claude-auto` — run a fresh, live-steerable Claude review through Rudder and apply confident critical and important fixes.
@@ -64,6 +68,7 @@ installations carry runtime-specific guidance.
 - `review-claude-herdr` — run a visible Claude review in a sibling Herdr pane and apply confident critical and important fixes.
 - `solve-codex-herdr` — delegate implementation work to a visible, steerable Codex agent in a sibling Herdr pane.
 - `solve-claude-herdr` — delegate implementation work to a visible, steerable Claude agent in a sibling Herdr pane.
+- `see` — read images, watch videos, run local OCR, and bulk-caption image sets through the [`see`](https://github.com/safzanpirani/see) CLI when the agent lacks vision.
 - `sxs` — build labeled image and video comparison sheets, sampled video contact sheets, and render grids with machine-readable layout metadata.
 
 The four `review-*-auto` and `solve-*-auto` skills rely on [Rudder](http://github.com/safzanpirani/rudder) for live steering and session management. Their direct Codex or Claude CLI paths provide non-steerable fallbacks when Rudder is unavailable.
@@ -74,3 +79,4 @@ The four `review-*-auto` and `solve-*-auto` skills rely on [Rudder](http://githu
 - `make-pr-easy-to-review` — prepare PRs by cleaning noisy history, improving descriptions, and adding reviewer guidance without behavior changes.
 - `thermo-nuclear-code-quality-review` — extremely strict maintainability review for abstraction quality, giant files, and spaghetti-condition growth.
 - `write-a-skill` — create new agent skills with proper structure, triggers, and optional references/scripts.
+- `writing-unslop` — write or rewrite English prose so it reads as one person talking, covering AI-writing vocabulary, structure tells, and rhetorical tics; ships a pattern reference.

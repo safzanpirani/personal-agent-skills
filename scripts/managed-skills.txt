@@ -2,7 +2,9 @@
 # Runtime-specific proofshot copies remain unmanaged.
 agent-controller-review
 astcomp
+bro
 bun-cli
+bun-native
 bun-tui
 chrome-cdp
 code-refactor-review
@@ -16,13 +18,16 @@ hallmark
 handoff
 i-have-adhd
 make-pr-easy-to-review
+papercuts
 personal-skill-sync
 quality-code
 read-project-memory
+review
 review-claude-auto
 review-claude-herdr
 review-codex-auto
 review-codex-herdr
+see
 solve-claude-auto
 solve-claude-herdr
 solve-codex-auto
@@ -32,3 +37,4 @@ tandem-loop
 thermo-nuclear-code-quality-review
 write-a-prd
 write-a-skill
+writing-unslop
